@@ -267,3 +267,21 @@ tooltipStyles.textContent = `
 `;
 
 document.head.appendChild(tooltipStyles);
+document.addEventListener("DOMContentLoaded", function() {
+    var audio = document.getElementById("bg-music");
+
+    // Attempt to autoplay
+    var playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            console.log("Autoplay started");
+        }).catch(() => {
+            console.log("Autoplay blocked, waiting for user interaction");
+            document.addEventListener("click", function() {
+                audio.play();
+            }, { once: true }); // Plays only once after first interaction
+        });
+    }
+});
+
